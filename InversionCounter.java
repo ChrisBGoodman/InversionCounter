@@ -20,6 +20,7 @@ public class InversionCounter {
 	public int[] source4 = new int[10000];
 	public int[] source5 = new int[10000];
 	public int[] sum = new int[10000];
+	public int[] count = new int[10000];
 
 	{ 
 		int fileNum = 1;
@@ -75,6 +76,8 @@ public class InversionCounter {
 			ee.printStackTrace();}
 	
 	getSum();			//Get sum of each source ranking and create a new array with the data of Summation 
+	quickSort(sum, 0, sum.length - 1);
+	
 	
 	for (int i = 0; i < 10000; i++)
 	{
@@ -82,7 +85,13 @@ public class InversionCounter {
 	}
 	
 	
-	}
+}
+	
+	
+	
+	
+	
+	
 	
 //-------------------------------------------------------------------------------------
 	public static void main(String[] args) {
@@ -92,6 +101,7 @@ public class InversionCounter {
 	}
 
 //-------------------------------------------------------------------------------------
+	//Finds sum of all source files
 	public void getSum()
 	{
 		for (int i = 0; i < 10000; i++)
@@ -106,8 +116,38 @@ public class InversionCounter {
 		
 	}
 	
-	public static void QuickSort()
+	int getIndex(int arr[], int left, int right)
+
 	{
-		
+	      int i = left;
+	      int j = right;
+	      int tmp;
+	      int pivot = arr[(left + right) / 2]; 
+	      
+	      while (i <= j)  						//While left less then right
+	      {
+	            while (arr[i] < pivot)		
+	                  i++;					
+	            while (arr[j] > pivot)			
+	                  j--;
+	            if (i <= j) {					//Swap positions 
+	                  tmp = arr[i];
+	                  arr[i] = arr[j];
+	                  arr[j] = tmp;
+	                  i++;
+	                  j--;
+	            }
+	      }
+	      return i; //return index 
+	}
+
+	void quickSort(int arr[], int left, int right)
+	{
+	      int index = getIndex(arr, left, right);
+	      if (left < index - 1)
+	            quickSort(arr, left, index - 1);
+	      if (index < right)
+	            quickSort(arr, index, right);
+
 	}
 }
