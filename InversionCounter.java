@@ -21,7 +21,9 @@ public class InversionCounter {
 	public int[] source5 = new int[10000];
 	public int[] sum = new int[10000];
 	public int[] count = new int[10000];
-
+	public int inversionCount = 0;
+	
+	
 	{ 
 		int fileNum = 1;
 		try {										//Below Switch reads in all source files into respected arrays
@@ -77,13 +79,17 @@ public class InversionCounter {
 	
 	getSum();			//Get sum of each source ranking and create a new array with the data of Summation 
 	quickSort(sum, 0, sum.length - 1);
+	inversionCounter(source1);
+	
 	
 	
 	for (int i = 0; i < 10000; i++)
 	{
-		System.out.println(sum[i]);
+		//System.out.println(sum[i]);
 	}
 	
+	System.out.println(inversionCount);
+
 	
 }
 	
@@ -122,15 +128,15 @@ public class InversionCounter {
 	      int i = left;
 	      int j = right;
 	      int tmp;
-	      int pivot = arr[(left + right) / 2]; 
+	      int pivot = arr[(left + right) / 2]; 	//choose pivot based on middle element 
 	      
 	      while (i <= j)  						//While left less then right
 	      {
-	            while (arr[i] < pivot)		
+	            while (arr[i] < pivot)			//Increment array to find correct location for data
 	                  i++;					
 	            while (arr[j] > pivot)			
 	                  j--;
-	            if (i <= j) {					//Swap positions 
+	            if (i <= j) {					//Swap positions of data 
 	                  tmp = arr[i];
 	                  arr[i] = arr[j];
 	                  arr[j] = tmp;
@@ -141,13 +147,28 @@ public class InversionCounter {
 	      return i; //return index 
 	}
 
-	void quickSort(int arr[], int left, int right)
+	void quickSort(int arr[], int left, int right) //QuickSort an Array with start and end index param 
 	{
 	      int index = getIndex(arr, left, right);
+	      
 	      if (left < index - 1)
 	            quickSort(arr, left, index - 1);
+	      
 	      if (index < right)
 	            quickSort(arr, index, right);
 
 	}
+	
+	void inversionCounter(int a[]) {
+		  int i, j;
+
+		  for (i = 0; i < a.length-1; i++)
+		  {
+		    for (j = i + 1; j < a.length; j++)
+		    {
+		    	if (a[i] > a[j])
+		        inversionCount++;
+		    }
+		  }
+		}
 }
