@@ -143,7 +143,7 @@ public class InversionCounter {
 	inversionCount5 = inversionCount;	
 	System.out.println("Inversions: " + inversionCount1 + " " + inversionCount2+ " " + inversionCount3
 			+ " " + inversionCount4 + " " + inversionCount5);
-	}while(inversionCount1 > 25000);
+	}while(inversionCount1 > 27000);
 												
 	
 
