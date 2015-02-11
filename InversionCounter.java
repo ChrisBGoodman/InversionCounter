@@ -271,20 +271,4 @@ public class InversionCounter {
 	            quickSort(arr, index, right);
 
 	}
-	
-	void inversionCounter(int a[][]) {
-		  int i, j, temp;
-
-		  for (i = 0; i < a.length-1; i++)
-		  {
-		    for (j = i + 1; j < a.length; j++)
-		    {
-		    	if (a[i][0] > a[j][0])
-		    	{
-		    		inversionCount++;
-		    		
-		    	}
-		    }
-		  }
-		}
 }
