@@ -29,10 +29,18 @@ public class InversionCounter {
 	public int[][] source3 = new int[10000][2];
 	public int[][] source4 = new int[10000][2];
 	public int[][] source5 = new int[10000][2];
+	public int[][] tempArray = new int[10000][2];
 	public int[][] sum = new int[10000][2];
 	public int[][] sortedSum = new int[10000][2];
 	public int[] count = new int[10000];
-	public int inversionCount = 0;
+	public int inversionCount  = 0;
+	public int inversionCount1 = 0;
+	public int inversionCount2 = 0;
+	public int inversionCount3 = 0;
+	public int inversionCount4 = 0;
+	public int inversionCount5 = 0;
+
+
 	
 	
 	{ 
@@ -51,7 +59,6 @@ public class InversionCounter {
 						source1[i][1] = x; 
 						i++;
 						x++;
-						
 					}
 					break;
 				case 2:
@@ -100,28 +107,66 @@ public class InversionCounter {
 		catch (IOException ee) {
 			ee.printStackTrace();}
 	
-	getSum();			//Get sum of each source ranking and create a new array with the data of Summation 
-	sortedSum = sum;
-	quickSort(sum, 0, source1.length - 1);
-	inversionCounter(source1);
-	reOrder();
 	
+	do{	
+	getSum();			//Get sum of each source ranking and create a new array with the data of Summation 
+	quickSort(sum, 0, source1.length - 1);
+	
+	inversionCount = 0;							//Reset inversion counter
+	reIndex(source1);							//ReIndex Source file
+	source1 = tempArray;						//copy the array used while reindexing source file
+	quickSort(source1, 0, source1.length - 1);	//quickSort reIndexed source file 
+	inversionCount1 = inversionCount;			//set inversions for source 
+												//repeat for all sources
+	inversionCount = 0;							
+	reIndex(source2);							
+	source2 = tempArray;						
+	quickSort(source2, 0, source2.length - 1);	 
+	inversionCount2 = inversionCount;			
+												
+	inversionCount = 0;							
+	reIndex(source3);							
+	source3 = tempArray;						
+	quickSort(source3, 0, source3.length - 1);	
+	inversionCount3 = inversionCount;			
+												
+	inversionCount = 0;							
+	reIndex(source4);							
+	source4 = tempArray;						
+	quickSort(source4, 0, source4.length - 1);	
+	inversionCount4 = inversionCount;			
+												
+	inversionCount = 0;							
+	reIndex(source5);							
+	source5 = tempArray;						
+	quickSort(source5, 0, source5.length - 1);	
+	inversionCount5 = inversionCount;	
+	System.out.println("Inversions: " + inversionCount1 + " " + inversionCount2+ " " + inversionCount3
+			+ " " + inversionCount4 + " " + inversionCount5);
+	}while(inversionCount1 > 25000);
+												
+	
+
+
 	
 	
 	for (int i = 0; i < 10000; i++)
 	{
 		
-		System.out.print("D: " + source1[i][0]);
+		//System.out.println(sum[i][0] + " ");
 		//System.out.print(" ========  ");
-		System.out.println(" I: " + source1[i][1]);
-		//System.out.println(source1[2][0]);
-		//System.out.println(source1[2][1]);
+		//System.out.println(sum[i][1]);
+		//System.out.println(source1[i][0] + " ");
+		//System.out.println(source1[i][1]);
+		//System.out.print(tempArray[i][0] + " ");
+		//System.out.println(tempArray[i][1]);
 		
 		
 		
 	}
 	
-	System.out.println("Inversions" + inversionCount);
+	System.out.println("Inversions: " + inversionCount1 + " " + inversionCount2+ " " + inversionCount3
+			+ " " + inversionCount4 + " " + inversionCount5);
 }
 //-------------------------------------------------------------------------------------
 	public static void main(String[] args) {
@@ -136,8 +181,11 @@ public class InversionCounter {
 	{
 		for (int i = 0; i < 10000; i++)
 		{
-			sum[i][0] = source1[i][0] + source2[i][0] + source3[i][0] + source4[i][0] + source5[i][0];
+			sum[i][0] = source1[i][0] * (1/1 + inversionCount1)  + source2[i][0]* (1/1 + inversionCount2)  
+					+ source3[i][0] * (1/1 + inversionCount3)  + source4[i][0] * (1/1 + inversionCount4)
+							+ source5[i][0] * (1/1 + inversionCount5);
 			sum[i][1] = i;
+			
 		}
 	}
 //-------------------------------------------------------------------------------------
@@ -147,24 +195,34 @@ public class InversionCounter {
 		
 	}
 	
-	public void reOrder()
+	public void reIndex(int s[][])
 	{
+		int source = 0;
+		int index = 0;
+		int temp = 0;
+		int i = 0;
+		boolean found = false;
 		
-		for (int x = 0; x < 10000; x++)
+		for (int x = 0; x < sum.length - 1; x++) //loop thru entire sum array
 		{
-			int i = 0;
-			while (source1[i][1] != sum[x][1]) //while not equal, search source file for num
+			found = false;
+			index = sum[x][1];
+			i = 0;
+			
+			do
 			{
-				i++;
+				if (index == s[i][1])				//when index found in source file
 				{
-					int tmp = source1[i][1];	//tmp = found index location
-					source1[i][1] = x;			//source index location swapped with correct location 
-					source1[x][1] = tmp;		//location moved
+					tempArray[x][0] = s[i][0];	//move index to temp array 
+					tempArray[x][1] = s[i][1];
+					found = true; 
 				}
-			}
-		
+				i++;
+			}while( found == false && i < 10000-1);
 		}
 	}
+		
+	
 	
 	int getIndex(int arr[][], int left, int right)
 
@@ -194,6 +252,7 @@ public class InversionCounter {
 	                  arr[i][1] = arr[j][1];
 	                  arr[j][1] = tmp;
 	                  
+	                  inversionCount++;
 	                  i++;
 	                  j--;
 	            }
