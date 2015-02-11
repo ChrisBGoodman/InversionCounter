@@ -13,7 +13,17 @@ import java.util.Scanner;
  * 
  */
 public class InversionCounter {
-
+/*
+ * Really lost on what to do. 
+ * getSum() will return summation array of all source files added across by row 
+ * quickSort() will perform a quickSort on a passed array with no return 
+ * inversionCounter() simply loops over each individal array location comparing and keeps running total of 'inversions'
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
 	public int[] source1 = new int[10000];			//Vars to hold all source data 
 	public int[] source2 = new int[10000];
 	public int[] source3 = new int[10000];
@@ -85,7 +95,7 @@ public class InversionCounter {
 	
 	for (int i = 0; i < 10000; i++)
 	{
-		//System.out.println(sum[i]);
+		System.out.println(source1[i]);
 	}
 	
 	System.out.println(inversionCount);
@@ -132,11 +142,16 @@ public class InversionCounter {
 	      
 	      while (i <= j)  						//While left less then right
 	      {
-	            while (arr[i] < pivot)			//Increment array to find correct location for data
-	                  i++;					
-	            while (arr[j] > pivot)			
+	            while (arr[i] < pivot)	
+	            {								//Increment array to find correct location for data
+	                  i++;
+	            }					
+	            while (arr[j] > pivot)	
+	            {
 	                  j--;
-	            if (i <= j) {					//Swap positions of data 
+	            }
+	            if (i <= j) 
+	            {								//Swap positions of data 
 	                  tmp = arr[i];
 	                  arr[i] = arr[j];
 	                  arr[j] = tmp;
@@ -160,14 +175,19 @@ public class InversionCounter {
 	}
 	
 	void inversionCounter(int a[]) {
-		  int i, j;
+		  int i, j, temp;
 
 		  for (i = 0; i < a.length-1; i++)
 		  {
 		    for (j = i + 1; j < a.length; j++)
 		    {
 		    	if (a[i] > a[j])
-		        inversionCount++;
+		    	{
+		    		inversionCount++;
+		    		//temp = a[j];
+		    		//a[j] = a[i];
+		    		//a[i] = temp; 
+		    	}
 		    }
 		  }
 		}
