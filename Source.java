@@ -32,8 +32,8 @@ public class Source {
      * @return The page at the rank
      */
     public Page getPageAtRank(int i) {
-        if(values.get(i) != null) {
-            return values.get(i);
+        if(values.get(i - 1) != null) {
+            return values.get(i - 1);
         }
         return null;
     }

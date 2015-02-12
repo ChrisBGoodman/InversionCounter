@@ -21,7 +21,7 @@ public class Main {
         }
 
         for(Source source : sources) {
-            for(int i = 0; i < source.getSize(); i++) {
+            for(int i = 1; i <= source.getSize(); i++) {
                 key.getPageAtRank(i).incrementValue(source.getPageAtRank(i).getPageValue());
             }
         }
@@ -46,9 +46,19 @@ public class Main {
         }
     }
 
+    public static void quickSortAll() {
+        sources.clear();
+        buildSourceList();
+
+        /**
+         * DO QUICK SORT HERE something like SortingHelper.quickSort(source);
+         */
+    }
+
     public static void main(String[] args) {
         buildSourceList();
         buildAverageList();
         mergeSortAll();
+        quickSortAll();
     }
 }
